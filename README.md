@@ -53,26 +53,6 @@ and
 
 Run on amd64 (5.4.0-146-generic)
 
-## OpenJDK 8.0.372-tem hotspot C2
-
-```
-Benchmark                                                      Mode  Cnt   Score   Error   Units
-MethodHandleBench.baseline                                     avgt    2   1.942           ns/op
-MethodHandleBench.baseline:·gc.alloc.rate                      avgt    2  ≈ 10⁻⁴          MB/sec
-MethodHandleBench.baseline:·gc.alloc.rate.norm                 avgt    2  ≈ 10⁻⁷            B/op
-MethodHandleBench.baseline:·gc.count                           avgt    2     ≈ 0          counts
--
-MethodHandleBench.methodHandleStatic                           avgt    2   5.587           ns/op
-MethodHandleBench.methodHandleStatic:·gc.alloc.rate            avgt    2  ≈ 10⁻⁴          MB/sec
-MethodHandleBench.methodHandleStatic:·gc.alloc.rate.norm       avgt    2  ≈ 10⁻⁷            B/op
-MethodHandleBench.methodHandleStatic:·gc.count                 avgt    2     ≈ 0          counts
--
-MethodHandleBench.methodHandleStaticFinal                      avgt    2   4.466           ns/op
-MethodHandleBench.methodHandleStaticFinal:·gc.alloc.rate       avgt    2  ≈ 10⁻⁴          MB/sec
-MethodHandleBench.methodHandleStaticFinal:·gc.alloc.rate.norm  avgt    2  ≈ 10⁻⁷            B/op
-MethodHandleBench.methodHandleStaticFinal:·gc.count            avgt    2     ≈ 0          counts
-```
-
 ### OpenJDK 17 Temurin hotspot C2
 
 ```
@@ -82,23 +62,29 @@ OpenJDK 64-Bit Server VM Temurin-17.0.6+10 (build 17.0.6+10, mixed mode, sharing
 ```
 
 ```
-Benchmark                                                      Mode  Cnt   Score   Error   Units
-MethodHandleBench.baseline                                     avgt    2   0.491           ns/op
-MethodHandleBench.baseline:·gc.alloc.rate                      avgt    2  ≈ 10⁻⁴          MB/sec
-MethodHandleBench.baseline:·gc.alloc.rate.norm                 avgt    2  ≈ 10⁻⁸            B/op
-MethodHandleBench.baseline:·gc.count                           avgt    2     ≈ 0          counts
+Benchmark                                                             Mode  Cnt   Score    Error   Units
+MethodHandleBench.baseline                                            avgt    5   0.502 ±  0.018   ns/op
+MethodHandleBench.baseline:·gc.alloc.rate                             avgt    5  ≈ 10⁻⁴           MB/sec
+MethodHandleBench.baseline:·gc.alloc.rate.norm                        avgt    5  ≈ 10⁻⁸             B/op
+MethodHandleBench.baseline:·gc.count                                  avgt    5     ≈ 0           counts
 -
-MethodHandleBench.methodHandleStatic                           avgt    2   4.536           ns/op
-MethodHandleBench.methodHandleStatic:·gc.alloc.rate            avgt    2  ≈ 10⁻⁴          MB/sec
-MethodHandleBench.methodHandleStatic:·gc.alloc.rate.norm       avgt    2  ≈ 10⁻⁷            B/op
-MethodHandleBench.methodHandleStatic:·gc.count                 avgt    2     ≈ 0          counts
+MethodHandleBench.methodHandleStaticFinal                             avgt    5   3.541 ±  0.560   ns/op
+MethodHandleBench.methodHandleStaticFinal:·gc.alloc.rate              avgt    5  ≈ 10⁻⁴           MB/sec
+MethodHandleBench.methodHandleStaticFinal:·gc.alloc.rate.norm         avgt    5  ≈ 10⁻⁷             B/op
+MethodHandleBench.methodHandleStaticFinal:·gc.count                   avgt    5     ≈ 0           counts
 -
-MethodHandleBench.methodHandleStaticFinal                      avgt    2   6.053           ns/op
-MethodHandleBench.methodHandleStaticFinal:·gc.alloc.rate       avgt    2  ≈ 10⁻⁴          MB/sec
-MethodHandleBench.methodHandleStaticFinal:·gc.alloc.rate.norm  avgt    2  ≈ 10⁻⁷            B/op
-MethodHandleBench.methodHandleStaticFinal:·gc.count            avgt    2     ≈ 0          counts
+MethodHandleBench.mh_plainObject_staticFinal                          avgt    5   0.740 ±  0.016   ns/op // <-
+MethodHandleBench.mh_plainObject_staticFinal:·gc.alloc.rate           avgt    5  ≈ 10⁻⁴           MB/sec
+MethodHandleBench.mh_plainObject_staticFinal:·gc.alloc.rate.norm      avgt    5  ≈ 10⁻⁷             B/op
+MethodHandleBench.mh_plainObject_staticFinal:·gc.count                avgt    5     ≈ 0           counts
+-
+MethodHandleBench.mh_staticPlainLong_staticFinal                      avgt    5   3.603 ±  0.412   ns/op // <-
+MethodHandleBench.mh_staticPlainLong_staticFinal:·gc.alloc.rate       avgt    5  ≈ 10⁻⁴           MB/sec
+MethodHandleBench.mh_staticPlainLong_staticFinal:·gc.alloc.rate.norm  avgt    5  ≈ 10⁻⁷             B/op
+MethodHandleBench.mh_staticPlainLong_staticFinal:·gc.count            avgt    5     ≈ 0           counts
+
 ```
-[async-profiler](./doc/openjdk_flame-cpu-forward.html)
+[async-profiler methodHandleStaticFinal](./doc/openjdk_flame-cpu-forward.html)
 
 ### native-image JDK17
 
@@ -109,20 +95,29 @@ graalvm-community-java17-linux-amd64-dev.tar.gz
 ```
 
 ```
-Benchmark                                                 Mode  Cnt    Score    Error   Units
-MethodHandleBench.baseline                                avgt    5    1.132 ±  0.051   ns/op
-MethodHandleBench.baseline:·gc.alloc.rate                 avgt    5      ≈ 0           MB/sec
-MethodHandleBench.baseline:·gc.count                      avgt    5      ≈ 0           counts
+Benchmark                                                        Mode  Cnt    Score   Error   Units
+MethodHandleBench.baseline                                       avgt    5    1.077 ± 0.027   ns/op
+MethodHandleBench.baseline:·gc.alloc.rate                        avgt    5      ≈ 0          MB/sec
+MethodHandleBench.baseline:·gc.count                             avgt    5      ≈ 0          counts
 -
-MethodHandleBench.methodHandleStatic                      avgt    5  439.598 ± 12.781   ns/op
-MethodHandleBench.methodHandleStatic:·gc.alloc.rate       avgt    5      ≈ 0           MB/sec
-MethodHandleBench.methodHandleStatic:·gc.count            avgt    5  126.000           counts
-MethodHandleBench.methodHandleStatic:·gc.time             avgt    5  235.000               ms
+MethodHandleBench.methodHandleStaticFinal                        avgt    5  429.505 ± 7.226   ns/op
+MethodHandleBench.methodHandleStaticFinal:·gc.alloc.rate         avgt    5      ≈ 0          MB/sec
+MethodHandleBench.methodHandleStaticFinal:·gc.count              avgt    5  129.000          counts
+MethodHandleBench.methodHandleStaticFinal:·gc.time               avgt    5  256.000              ms
 -
-MethodHandleBench.methodHandleStaticFinal                 avgt    5  440.528 ± 19.104   ns/op
-MethodHandleBench.methodHandleStaticFinal:·gc.alloc.rate  avgt    5      ≈ 0           MB/sec
-MethodHandleBench.methodHandleStaticFinal:·gc.count       avgt    5  125.000           counts
-MethodHandleBench.methodHandleStaticFinal:·gc.time        avgt    5  238.000               ms
+MethodHandleBench.mh_plainObject_staticFinal                     avgt    5    3.649 ± 0.018   ns/op // <-
+MethodHandleBench.mh_plainObject_staticFinal:·gc.alloc.rate      avgt    5      ≈ 0          MB/sec
+MethodHandleBench.mh_plainObject_staticFinal:·gc.count           avgt    5      ≈ 0          counts
+-
+MethodHandleBench.mh_staticPlainLong_staticFinal                 avgt    5  406.263 ± 3.008   ns/op
+MethodHandleBench.mh_staticPlainLong_staticFinal:·gc.alloc.rate  avgt    5      ≈ 0          MB/sec
+MethodHandleBench.mh_staticPlainLong_staticFinal:·gc.count       avgt    5  111.000          counts
+MethodHandleBench.mh_staticPlainLong_staticFinal:·gc.time        avgt    5  224.000              ms
 ```
 
-![flamegraph](./doc/flamegraph_nativeimage_MethodHandle.svg)
+![flamegraph methodHandleStaticFinal](./doc/flamegraph_nativeimage_MethodHandle.svg)
+(flamegraph methodHandleStaticFinal)
+
+![flamegraph plainObject_staticFinal](./doc/flamegraph_mh_plainObject.png)
+(flamegraph plainObject_staticFinal)
+

@@ -307,6 +307,40 @@
     ]
   },
   {
+    "name": "io.sergejisbrecht.jmh_generated.MethodHandleBench_mh_staticPlainLong_staticFinal_jmhTest",
+    "queryAllDeclaredMethods": true,
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      },
+      {
+        "name": "mh_staticPlainLong_staticFinal_AverageTime",
+        "parameterTypes": [
+          "org.openjdk.jmh.runner.InfraControl",
+          "org.openjdk.jmh.infra.ThreadParams"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "io.sergejisbrecht.jmh_generated.MethodHandleBench_mh_plainObject_staticFinal_jmhTest",
+    "queryAllDeclaredMethods": true,
+    "methods": [
+      {
+        "name": "<init>",
+        "parameterTypes": []
+      },
+      {
+        "name": "mh_plainObject_staticFinal_AverageTime",
+        "parameterTypes": [
+          "org.openjdk.jmh.runner.InfraControl",
+          "org.openjdk.jmh.infra.ThreadParams"
+        ]
+      }
+    ]
+  },
+  {
     "name": "java.io.PrintStream",
     "fields": [
       {

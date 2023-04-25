@@ -20,50 +20,57 @@ public class MethodHandleBench {
   @OutputTimeUnit(TimeUnit.NANOSECONDS)
   @BenchmarkMode(Mode.AverageTime)
   public void baseline(Blackhole blackhole) throws Exception {
-    blackhole.consume(calls.plain());
+    blackhole.consume(calls.plainLong());
   }
 
   @Benchmark
   @OutputTimeUnit(TimeUnit.NANOSECONDS)
   @BenchmarkMode(Mode.AverageTime)
   public void methodHandleStaticFinal(Blackhole blackhole) throws Throwable {
-    blackhole.consume(Calls.methodHandleStaticFinal.invoke(calls));
+    blackhole.consume(Calls.mh_plainLong_staticFinal.invoke(calls));
   }
 
   @Benchmark
   @OutputTimeUnit(TimeUnit.NANOSECONDS)
   @BenchmarkMode(Mode.AverageTime)
-  public void methodHandleStatic(Blackhole blackhole) throws Throwable {
-    blackhole.consume(Calls.methodHandleFinal.invoke(calls));
+  public void mh_staticPlainLong_staticFinal(Blackhole blackhole) throws Throwable {
+    blackhole.consume(Calls.mh_staticPlainLong_staticFinal.invoke());
+  }
+
+  @Benchmark
+  @OutputTimeUnit(TimeUnit.NANOSECONDS)
+  @BenchmarkMode(Mode.AverageTime)
+  public void mh_plainObject_staticFinal(Blackhole blackhole) throws Throwable {
+    blackhole.consume(Calls.mh_plainObject_staticFinal.invoke(calls));
   }
 }
 
 final class Calls {
-  static final MethodHandle methodHandleStaticFinal;
-
-  static MethodHandle methodHandleFinal = null;
+  static final MethodHandle mh_plainLong_staticFinal;
+  static final MethodHandle mh_plainObject_staticFinal;
+  static final MethodHandle mh_staticPlainLong_staticFinal;
 
   static {
     try {
-      methodHandleStaticFinal = MethodHandles.lookup().findVirtual(Calls.class, "plain", MethodType.methodType(long.class));
-    } catch (NoSuchMethodException e) {
-      throw new RuntimeException(e);
-    } catch (IllegalAccessException e) {
-      throw new RuntimeException(e);
-    }
-  }
-
-  public Calls() {
-    try {
-      methodHandleFinal = MethodHandles.lookup().findVirtual(Calls.class, "plain", MethodType.methodType(long.class));
-    } catch (NoSuchMethodException e) {
-      throw new RuntimeException(e);
-    } catch (IllegalAccessException e) {
+      mh_plainLong_staticFinal = MethodHandles.lookup().findVirtual(Calls.class, "plainLong", MethodType.methodType(long.class));
+      mh_plainObject_staticFinal = MethodHandles.lookup().findVirtual(Calls.class, "plainObject", MethodType.methodType(Object.class));
+      mh_staticPlainLong_staticFinal = MethodHandles.lookup().findStatic(Calls.class, "staticPlainLong", MethodType.methodType(long.class));
+    } catch (NoSuchMethodException | IllegalAccessException e) {
       throw new RuntimeException(e);
     }
   }
 
-  public long plain() {
+  private final Object object1 = new Object();
+
+  public static long staticPlainLong() {
     return 42L;
+  }
+
+  public long plainLong() {
+    return 42L;
+  }
+
+  public Object plainObject() {
+    return object1;
   }
 }
